@@ -1,0 +1,187 @@
+<!-- 
+    Definisi 1 :
+    1. Interface ini merupakan Kelas Abstrak yang sama sekali tidak memiliki implementasi.
+    2. Murni merupakan template untuk kelas turunannya.
+    3. Tidak Boleh Memiliki property, hanya deklarasi method saja.
+
+
+ -->
+<?php
+
+interface InfoProduk {
+  public function getInfoProduk(); 
+} 
+// --------------------------------- Start Class Produk ------------------------
+// Visibility :
+// protected
+// private
+// public
+// Magic Method :
+// __set()
+// __get()
+
+Abstract class Produk {
+  protected $judul,   
+         $penulis,
+         $penerbit,
+         $harga,
+         $diskon = 0;
+
+  // MAGIC METHOD :
+  // __construct ->  adalah Method khusus yang akan dijalankansecara otomatis
+  // __destruct ->
+
+  public function __construct ( $judul = "judul", $penulis = "Ivan", $penerbit = "Gramedia", $harga = 0 ) {
+    $this -> judul = $judul;
+    $this -> penulis = $penulis;
+    $this -> penerbit = $penerbit;
+    $this -> harga = $harga;
+  }
+
+  public function setJudul( $judul ) {
+    // Jika ingin judul hanya dengan string, tambahkan if dibawah ini:
+    // if ( !is_string($judul)) {
+    //   # code...
+    //   throw new Exception("Judul Harus Berupa String");   
+    // }
+    $this -> judul = $judul;
+  }
+
+
+  public function getJudul() {
+    return $this ->judul; 
+  }
+
+  public function setPenulis ( $penulis ) {
+   $this -> penulis = $penulis;
+  }
+
+  public function getPenulis() {
+    return $this -> penulis;
+  }
+
+  public function setPenerbit( $penerbit ) {
+    $this -> penerbit = $penerbit;
+  }
+
+  public function getPenerbit() {
+    return $this -> penerbit;
+  }
+
+  public function setDiskon( $diskon ) {
+    $this->diskon = $diskon;
+
+  }
+
+  public function getDiskon() {
+    return $this -> diskon;
+  }
+
+  public function setHarga ( $harga ) {
+    $this -> harga = $harga;
+  }
+
+  public function getHarga () {
+    return $this->harga - ( $this->harga * $this->diskon / 100 );
+  }
+
+
+  public function getLabel() { // function getLabel() adalah untuk menambahkan label.
+    return "$this->penulis, $this->penerbit"; // $this -> variabel scope
+    // $this untuk mengambil isi dari property yang ada di dalam kelas yang bersangkutan, ketika dibuat instanse nya.
+  }
+
+  abstract public function getInfo();
+  
+}
+// ------------------------------ Akhir Class Produk --------------------------------
+// -------------------------------- Start Class Komik Child --------------------------
+class Komik extends Produk implements InfoProduk {
+  public $jmlHalaman;
+
+  public function __construct( $judul = "judul", $penulis = "Ivan", $penerbit = "Gramedia", $harga = 0, $jmlHalaman = 0 ) {
+
+    parent::__construct( $judul, $penulis, $penerbit, $harga );
+
+    $this-> jmlHalaman = $jmlHalaman;
+ 
+  }
+
+  public function getInfo() {
+    $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+    return $str;
+  }
+
+  public function getInfoProduk() {
+    
+    $str = "Komik : " . $this->getInfo() . " - {$this->jmlHalaman} Halaman.";
+    return $str;
+  }
+}
+// -------------------------------- Akhir Class Komik Child --------------------------
+// -------------------------------- Start Class Game Child ---------------------------
+class Game extends Produk implements InfoProduk {
+  public $waktuMain;
+
+    public function __construct( $judul = "judul", $penulis = "Ivan", $penerbit = "Gramedia", $harga = 0, $waktuMain = 0 ) {
+      
+      parent::__construct( $judul, $penulis, $penerbit, $harga );
+
+      $this-> waktuMain = $waktuMain;
+
+    }
+    
+    public function getInfo() {
+      $str = "{$this->judul} | {$this->getLabel()} (Rp. {$this->harga})";
+      return $str;
+    }
+
+    public function getInfoProduk() {
+      $str = "Game : " . $this->getInfo() . " ~ {$this->waktuMain} Jam.";
+      return $str;
+    }
+}
+// -------------------------------- Akhir Class Game Child ---------------------------
+
+class CetakInfoProduk {
+  public $daftarProduk = array();
+
+  public function tambahProduk( Produk $produk) {
+    $this->daftarProduk[] = $produk;
+  }
+
+  public function cetak(){ // Produk $produk -> adalah contoh kita bisa membuat Objek sebagai Tipe Datanya sendiri.
+    $str = "DAFTAR PRODUK : <br>"; // $str adalah fungsi string. {} -> adalah buat penggabungan string.
+    
+    foreach( $this->daftarProduk as $p) {
+      $str .= "- {$p->getInfoProduk()} <br>";
+    }
+    
+    
+    return $str;
+  }
+}
+
+// object buat komik
+$produk1 = new Komik("Naruto", "Musashi Namoto", "Shonen Jutsuu", 100000, 100); // Object = $produk3 , property = judul = "Naruto"
+// objek buat game
+$produk2 = new Game("The Warriors", "Syin Long", "Ling ling Sue", 250000, 50);
+
+$cetakProduk = new CetakInfoProduk();
+$cetakProduk->tambahProduk( $produk1 );
+$cetakProduk->tambahProduk( $produk2 );
+echo $cetakProduk->cetak();
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>

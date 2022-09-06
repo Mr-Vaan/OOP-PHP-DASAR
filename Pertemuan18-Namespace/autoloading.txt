@@ -1,0 +1,12 @@
+Autoloading itu adalah sesuai dengan namanya ya aadalah proses pemanggilan class yang nantinya kita simpan dalam bentuk (file) tanpa harus
+menggunakan fungsi (require). Jadi secara otomatis memanggilnya, karena nantinya, pada saat kita membuat sebuah aplikasi menggunakan konsep OOP, itu biasanya 1 class itu kita tulis ke dalam sebuah file.
+
+Kalo di latihan latihan kita sebelumnya, kan itu semua class kita simpan di dalam 1 file,nah nanti sebetulnya tidak seperti itu
+
+Jadi, nanti kita coba deh gaimana memisahkan class-class yang kita punya ke dalam file-file terpisah
+
+neh pertanyaannya adalah kenapa dengan menggunakan (require/include/require ones)?, nah sebetulnya dengan menggunakan fungsi-fungsi tersebut kan gunanya sama ya, untuk memanggil file terpisah.
+nah itu sebetulnya gaada masalah menggunakan fungsi ini, kalau aplikasi yang kalian buat itu masih yang sederhana, lalu kalian hanya bekerja sendiri.Tapi kan nanti kedepannya mungkin aja kalian bekerja berkolaborasi dalam sebuah tim, untuk membuat sebuah aplikasi yang besar.
+Ketika Kalian hanya menggunakan (require) saja, mungkin nanti akan cukup merepotkan.
+
+LANGSUNG Buka Studi Kasus.
